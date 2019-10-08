@@ -141,3 +141,210 @@ function main7() {
 
 }
 
+function main8() {
+    function mergeArrays(arr1, arr2) {
+        let arr1Index = 0;
+        let arr2Index = 0;
+        let exit = new Array;
+
+        while ((arr1Index < arr1.length) && (arr2Index < arr2.length)) {
+            let arr1Value;
+            let arr2Value;
+            if (arr1Index > arr1.length) {
+                arr2Value = arr2.get(arr2Index)
+                exit.push(arr2Value)
+                arr2Index++
+            }
+            else if (arr2Index > arr2.length) {
+                arr1Value = arr1.get(arr1Index)
+                exit.push(arr1Value)
+                arr1Index++
+            }
+            else {
+                arr1Value = arr1.get(arr1Index)
+                arr2Value = arr2.get(arr2Index)
+                if (arr1Value > arr2Value) {
+                    exit.push(arr2Value)
+                    arr2Index++
+                }
+                else if (arr1Value < arr2Value) {
+                    exit.push(arr1Value)
+                    arr1Index++
+                }
+                else if (arr1Value === arr2Value) {
+                    exit.push(arr1Value)
+                    exit.push(arr2Value)
+                    arr1Index++
+                    arr2Index++
+                }
+                else {
+                    throw new Error('This line of code should never execute. Something broke.')
+                }
+            }
+        }
+
+        return exit;
+    }
+
+    let arrA = new Array
+    let arrB = new Array
+    arrA.push(1)
+    arrA.push(3)
+    arrA.push(6)
+    arrA.push(8)
+    arrA.push(11)
+    arrB.push(2)
+    arrB.push(3)
+    arrB.push(5)
+    arrB.push(8)
+    arrB.push(9)
+    arrB.push(10)
+
+    arrC = mergeArrays(arrA, arrB)
+    console.log(arrC)
+    for (let i = 0; i < arrC.length; i++) {
+        console.log(arrC.get(i))
+    }
+}
+
+function main9() {
+    function removeChars(s, removeS) {
+        if (typeof s !== 'string' || typeof removeS !== 'string') {
+            throw new Error('inputs must be strings')
+        }
+        else {
+            let output = ''
+            let k = 0
+            let filterChar;
+            let char;
+            for (let i = 0; i < s.length; i++) {
+                char = s[i]
+                filterChar = false;
+                for (let j = 0; j < removeS.length; j++) {
+                    let removeSChar = removeS[j]
+                    if (char === removeSChar) {
+                        filterChar = true;
+                        j = removeS.length;
+                    }
+                    else { }
+                }
+                if (!filterChar) {
+                    output = output.slice(0, k) + char + output.slice(k)
+                    k++
+                }
+                else { }
+            }
+            return output
+        }
+    }
+    const string = 'Battle of the Vowels: Hawaii vs. Grozny'
+    const filter = 'aeiou'
+    console.log(removeChars(string, filter))
+}
+
+function main10() {
+    function products(arr) { //O(n^2)
+        let output = new Array;
+        for (let i = 0; i < arr.length; i++) {
+            let toPush = 1;
+            for (let j = 0; j < arr.length; j++) {
+                if (j === i) { }
+                else {
+                    toPush = toPush * arr.get(j)
+                }
+            }
+            output.push(toPush)
+        }
+
+        return output;
+    }
+
+    myArray = new Array
+    myArray.push(1)
+    myArray.push(3)
+    myArray.push(9)
+    myArray.push(4)
+    newArray = products(myArray)
+    for (let i = 0; i < newArray.length; i++) {
+        console.log(newArray.get(i))
+    }
+
+    console.log('----------------')
+
+    function betterProducts(arr) { //O(2n)
+        let output = new Array;
+        let totalProduct = 1
+        for (let i = 0; i < arr.length; i++) {
+            totalProduct = totalProduct * arr.get(i)
+        }
+        for (let i = 0; i < arr.length; i++) {
+            output.push(totalProduct / arr.get(i))
+        }
+        return output;
+    }
+
+    newArray2 = betterProducts(myArray)
+    for (let i = 0; i < newArray2.length; i++) {
+        console.log(newArray2.get(i))
+    }
+}
+
+function main11() {
+    function array2d(bigArr) {
+        if ((typeof bigArr !== 'object') || typeof bigArr[0] !== 'object') {
+            throw new Error('input should be an array of arrays. IE: [[1, 0, 1], [0, 1, 0], [0, 0, 0]]')
+        }
+        let output = []
+        for (let m = 0; m < bigArr.length; m++) {
+            let toPush = []
+            for (let n = 0; n < bigArr[m].length; n++){
+                let thisValue = bigArr[m][n]
+                toPush.push(thisValue)
+            }
+        }
+        for (let i = 0; i < bigArr.length; i++) {
+            let rowPushed = false;
+            let smallArr = bigArr[i]
+            let zeroFoundInCollumn;
+            for (let j = 0; j < smallArr.length; j++) {
+                let currentValue = smallArr[j]
+                if (currentValue === 0) {
+                    if (rowPushed) {
+                        j = smallArr.length
+                    }
+                    else {
+                    let rowToPush = []
+                    for (let k = 0; k < smallArr.length; k++) {
+                        rowToPush.push(0)
+                    }
+                    output[i] = (rowToPush);
+                    rowPushed = true;
+                    zeroFoundInCollumn = j
+                }
+                }
+            }
+            if (rowPushed) {
+                console.log(output)
+                for (let l = 0; l < bigArr.length; l++) {
+                    output[l][zeroFoundInCollumn] = 0
+                }
+            }
+            else {}
+        }
+        return output;
+    }
+
+    let my2dArray = [
+        [1, 0, 1, 1, 0],
+        [0, 1, 1, 1, 0],
+        [1, 1, 1, 1, 1],
+        [1, 0, 1, 1, 1],
+        [1, 1, 1, 1, 1]
+    ];
+
+    console.log(array2d(my2dArray))
+
+    //I have my variables referencing eachother, rather than getting set to the value of whatever variable. I have tried multiple approaches but seem to just keep crashing or breaking my code.
+}
+
+main11()
